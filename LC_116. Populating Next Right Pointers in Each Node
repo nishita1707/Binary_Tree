@@ -1,0 +1,76 @@
+#Problem - 
+You are given a perfect binary tree where all leaves are on the same level, and every parent has two children. The binary tree has the following definition:
+
+struct Node {
+  int val;
+  Node *left;
+  Node *right;
+  Node *next;
+}
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+
+Initially, all next pointers are set to NULL.
+
+#Solution -
+
+#Intuition
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+
+Initially, all next pointers are set to NULL.
+
+#Approach
+We will define our base case i.e, if our root is equal to null then return root.
+Then we will define a curr node which we will be using to move down.
+Then we will check if curr.left is not null basically we are going on the left side and we will initialize another ref node as temp to set the next pointer to.
+Then we will check if head is not null then temp.left.next = temp.right;
+Now if we are at the 2nd level then we can set as temp.left.next = temp.right, but we have to set temp.right.next = temp.next.left for that first we will check if temp.next is null or not.
+Now then we will simply do temp = temp.next to check for all the nodes.
+and we will do curr = curr.next to check for all the levels.
+Then we will return the root node.
+
+#Complexity
+Time complexity: O(n)
+
+Space complexity: O(1)
+
+Code
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node next;
+
+    public Node() {}
+    
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, Node _left, Node _right, Node _next) {
+        val = _val;
+        left = _left;
+        right = _right;
+        next = _next;
+    }
+};
+*/
+
+class Solution {
+    public Node connect(Node root) {
+        if(root==null) return root;
+        Node curr = root;
+        while(curr.left!=null){
+          Node temp = curr;
+          while(temp!=null){
+            temp.left.next = temp.right;
+            if(temp.next!=null) temp.right.next = temp.next.left;
+            temp = temp.next;
+          }
+          curr = curr.left;
+        }
+        return root;
+    }
+}
+
